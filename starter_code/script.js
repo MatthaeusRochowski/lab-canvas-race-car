@@ -26,6 +26,7 @@ class RaceGame extends CanvasGame {
     this.road.drawRoad();
     this.player.draw();
     this.player.update();
+    console.log(this.player.isRoadsideLeft());
   }
 
   clearCanvas() {
@@ -74,6 +75,22 @@ class Car {
     this.x += this.speedX;
     //console.log("pass auf wo du hinfährst");
   }
+
+  left() {
+    return this.x;
+  }
+
+  right() {
+    return this.x + 80;
+  }
+
+  isRoadsideLeft() {
+    return (this.left() > 0);
+  }
+
+  isRoadsideRight() {
+    return (this.right() < 500);
+  }
 }
 
 class Player extends Car {
@@ -83,10 +100,10 @@ class Player extends Car {
       console.log("Taste gedrückt");
       switch (e.keyCode) {
         case 37:
-          this.speedX -= 1;
+          if (this.isRoadsideLeft()) this.speedX -= 1;
           break;
         case 39:
-          this.speedX += 1;
+          if (this.isRoadsideRight()) this.speedX += 1;
           break;
         default:
       }
